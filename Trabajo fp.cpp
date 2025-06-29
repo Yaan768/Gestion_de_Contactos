@@ -1,60 +1,85 @@
 #include <iostream>
-#include <vector>
-#include <string>
 using namespace std;
 
-// Estructura para representar un contacto
 struct contactoEmail {
-    string nombres;
-    string sexo;
+    string nombreCompleto;
+    char sexo;
     int edad;
     string telefono;
     string email;
     string nacionalidad;
 };
 
-// Función para mostrar el menú principal
+const int MAX = 100;
+contactoEmail contactos[MAX];
+int totalContactos = 0;
+
+void agregarContacto() {
+    if (totalContactos < MAX) {
+        cout << "\n--- Agregar nuevo contacto ---\n";
+        cout << "Nombre completo (sin espacios): ";
+        cin >> contactos[totalContactos].nombreCompleto;
+
+        cout << "Sexo (M/F): ";
+        cin >> contactos[totalContactos].sexo;
+
+        cout << "Edad: ";
+        cin >> contactos[totalContactos].edad;
+
+        cout << "Telefono: ";
+        cin >> contactos[totalContactos].telefono;
+
+        cout << "Email: ";
+        cin >> contactos[totalContactos].email;
+
+        cout << "Nacionalidad: ";
+        cin >> contactos[totalContactos].nacionalidad;
+
+        totalContactos++;
+        cout << "Contacto agregado correctamente.\n";
+    } else {
+        cout << "Se alcanzo el maximo de contactos.\n";
+    }
+}
+
 void mostrarMenu() {
-    cout << "\n--- GESTION DE CONTACTOS ---" << endl;
-    cout << "a) Agregar un contacto" << endl;
-    cout << "b) Eliminar un contacto" << endl;
-    cout << "c) Mostrar listado general de contactos" << endl;
-    cout << "d) Mostrar contactos ordenados por servidor de correo" << endl;
-    cout << "e) Salir" << endl;
+    cout << "\n===== MENU DE CONTACTOS =====\n";
+    cout << "a) Agregar un contacto\n";
+    cout << "b) Eliminar un contacto\n";
+    cout << "c) Mostrar listado general\n";
+    cout << "d) Mostrar ordenado por servidor de correo\n";
+    cout << "e) Salir\n";
     cout << "Seleccione una opcion: ";
 }
 
 int main() {
-    vector<contactoEmail> contactos; // Lista de contactos
     char opcion;
-
     do {
         mostrarMenu();
         cin >> opcion;
-        cin.ignore(); // Para evitar problemas 
 
-        switch(opcion) {
+        switch (opcion) {
             case 'a':
-                // Agregar contacto 
+                agregarContacto();
                 break;
             case 'b':
-                // Eliminar contacto 
+                cout << "Eliminar contacto";
                 break;
             case 'c':
-                // Mostrar todos los contactos
+                cout << "Mostrar listado general";
                 break;
             case 'd':
-                // Mostrar por servidor de correo 
+                cout << "Mostrar ordenado por servidor ";
                 break;
             case 'e':
-                cout << "Saliendo del programa..." << endl;
+                cout << "Saliendo del programa...\n";
                 break;
             default:
-                cout << "Opcion invalida. Intente de nuevo." << endl;
+                cout << "Opcion invalida. Intente de nuevo.\n";
         }
-
-    } while(opcion != 'e');
+    } while (opcion != 'e');
 
     return 0;
 }
+
 
