@@ -42,6 +42,35 @@ void agregarContacto() {
     }
 }
 
+void eliminarContacto() {
+    if (totalContactos == 0) {
+        cout << "No hay contactos registrados.\n";
+        return;
+    }
+
+    cout << "\n--- Eliminar contacto ---\n";
+    for (int i = 0; i < totalContactos; i++) {
+        cout << i + 1 << ") " << contactos[i].nombreCompleto << " - " << contactos[i].email << endl;
+    }
+
+    int pos;
+    cout << "Ingrese el numero del contacto que desea eliminar: ";
+    cin >> pos;
+
+    if (pos < 1 || pos > totalContactos) {
+        cout << "Posicion invalida.\n";
+        return;
+    }
+
+    // Desplazar contactos
+    for (int i = pos - 1; i < totalContactos - 1; i++) {
+        contactos[i] = contactos[i + 1];
+    }
+
+    totalContactos--;
+    cout << "Contacto eliminado correctamente.\n";
+}
+
 void mostrarMenu() {
     cout << "\n===== MENU DE CONTACTOS =====\n";
     cout << "a) Agregar un contacto\n";
@@ -63,13 +92,13 @@ int main() {
                 agregarContacto();
                 break;
             case 'b':
-                cout << "Eliminar contacto";
+                eliminarContacto();
                 break;
             case 'c':
-                cout << "Mostrar listado general";
+                cout << "Mostrar listado general ";
                 break;
             case 'd':
-                cout << "Mostrar ordenado por servidor ";
+                cout << "[Mostrar ordenado por servidor ";
                 break;
             case 'e':
                 cout << "Saliendo del programa...\n";
@@ -81,5 +110,6 @@ int main() {
 
     return 0;
 }
+
 
 
