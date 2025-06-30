@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm> 
 using namespace std;
 
 const int MAX_CONTACTOS = 100;
@@ -16,6 +17,16 @@ struct ContactoEmail {
 ContactoEmail contactos[MAX_CONTACTOS];
 int totalContactos = 0;
 
+// Función para obtener el servidor del correo 
+string obtenerServidor(const string& email) {
+    size_t pos = email.find('@');
+    if (pos != string::npos) {
+        return email.substr(pos + 1);
+    }
+    return "";
+}
+
+// Función para agregar un contacto
 void agregarContacto() {
     if (totalContactos >= MAX_CONTACTOS) {
         cout << "No se pueden agregar más contactos.\n";
@@ -40,6 +51,7 @@ void agregarContacto() {
     cout << "Contacto agregado correctamente.\n";
 }
 
+// Función para eliminar un contacto
 void eliminarContacto() {
     if (totalContactos == 0) {
         cout << "\nNo hay contactos para eliminar.\n";
@@ -64,6 +76,7 @@ void eliminarContacto() {
     cout << "Contacto eliminado exitosamente.\n";
 }
 
+// Función para mostrar todos los contactos
 void mostrarContactos() {
     if (totalContactos == 0) {
         cout << "\nNo hay contactos registrados.\n";
@@ -82,6 +95,36 @@ void mostrarContactos() {
     }
 }
 
+// Función para mostrar contactos ordenados por servidor de correo
+void mostrarPorServidor() {
+    if (totalContactos == 0) {
+        cout << "\nNo hay contactos registrados.\n";
+        return;
+    }
+
+    // Creamos una copia temporal del arreglo original
+    ContactoEmail copia[MAX_CONTACTOS];
+    for (int i = 0; i < totalContactos; i++) {
+        copia[i] = contactos[i];
+    }
+
+    // Ordenamos la copia con bubble sort (porque no usamos vector aquí)
+    for (int i = 0; i < totalContactos - 1; i++) {
+        for (int j = 0; j < totalContactos - i - 1; j++) {
+            if (obtenerServidor(copia[j].email) > obtenerServidor(copia[j + 1].email)) {
+                swap(copia[j], copia[j + 1]);
+            }
+        }
+    }
+
+    cout << "\n--- Contactos ordenados por servidor de correo ---\n";
+    for (int i = 0; i < totalContactos; i++) {
+        cout << "\nContacto #" << i + 1 << ":\n";
+        cout << "Nombre: " << copia[i].nombreCompleto << endl;
+        cout << "Email: " << copia[i].email << " (Servidor: " << obtenerServidor(copia[i].email) << ")\n";
+    }
+}
+
 int main() {
     char opcion;
 
@@ -90,7 +133,7 @@ int main() {
         cout << "a) Agregar un contacto\n";
         cout << "b) Eliminar un contacto\n";
         cout << "c) Mostrar listado general de contactos\n";
-        cout << "d) Mostrar listado ordenado por servidor de correo (en desarrollo)\n";
+        cout << "d) Mostrar listado ordenado por servidor de correo\n";
         cout << "e) Salir del programa\n";
         cout << "Seleccione una opcion: ";
         cin >> opcion;
@@ -106,7 +149,7 @@ int main() {
                 mostrarContactos();
                 break;
             case 'd':
-                cout << "Funcion en desarrollo...\n";
+                mostrarPorServidor();
                 break;
             case 'e':
                 cout << "Saliendo del programa...\n";
@@ -119,7 +162,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
