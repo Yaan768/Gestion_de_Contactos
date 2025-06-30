@@ -152,7 +152,9 @@ int main() {
                 mostrarPorServidor();
                 break;
             case 'e':
-                cout << "Saliendo del programa...\n";
+                cout << "\nGracias por usar el sistema de gestion de contactos.\n";
+                cout << "¡Hasta pronto!" << endl;
+                
                 break;
             default:
                 cout << "Opcion invalida. Intente nuevamente.\n";
